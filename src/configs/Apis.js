@@ -1,7 +1,7 @@
 import axios from "axios"
 import cookie from 'react-cookies'
 
-const BASE_URL = 'http://back-end-457180940.us-east-1.elb.amazonaws.com/DienToanDamMay';
+const BASE_URL = 'http://back-end-457180940.us-east-1.elb.amazonaws.com:8080/DienToanDamMay';
 
 export const endpoints = {
     'register': '/register',
