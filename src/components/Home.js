@@ -12,6 +12,7 @@ const Home = () => {
     const navigate = useNavigate(); // Hook để chuyển hướng
     const [q] = useSearchParams();
     const user = useContext(MyUserContext);
+    const [msg, setMsg] = useState();
 
 
     const loadDatabases = async () => {
@@ -42,12 +43,16 @@ const Home = () => {
             setLoading(true);
             let res = await authApis().post(endpoints['load_databases']);
             console.log(res);
-            loadDatabases();
+            setMsg("Tạo database thành công")
+
+            
         } catch (error) {
             console.log(error);
+            setMsg("Tạo database thất bại")
         }
         finally {
             setLoading(false);
+            loadDatabases();
         }
 
     }
@@ -57,17 +62,22 @@ const Home = () => {
             setLoading(true);
             let res = await authApis().delete(endpoints['delete_database'](p.name));
             console.log(res);
-            loadDatabases();
+            setMsg("Xóa database thành công")
+
         } catch (error) {
             console.log(error);
+            setMsg("Xóa database thất bại")
+
         }
         finally {
             setLoading(false);
+            loadDatabases();
         }
     }
     return (
         <>
             {loading && <MySpinner />}
+            {msg && <Alert variant="danger" className="mt-1">{msg}</Alert>}
             {databases.length === 0 ? <Alert variant="info" className="mt-2">Không có database nào!</Alert> : <>
                 {/* <a href="https://www.phpmyadmin.co" target="_blank" rel="noopener noreferrer">
                     Truy cập phpMyAdmin
